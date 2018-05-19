@@ -1,0 +1,770 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}压力测试{% endblock %}
+{% block headjs %}
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <!-- Bootstrap 3.3.7 -->
+    <link rel="stylesheet" href="{% static 'mycss/demo.css' %}">
+    <link rel="stylesheet" href="{% static 'mycss/change.css' %}">
+    <link rel="stylesheet" href="{% static 'mycss/main.css' %}">
+    <link rel="stylesheet" href="{% static 'mycss/public-date.css' %}">
+    <link rel="stylesheet" href="{% static 'bower_components/bootstrap/dist/css/bootstrap.min.css' %}">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="{% static 'bower_components/font-awesome/css/font-awesome.min.css' %}">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="{% static 'bower_components/Ionicons/css/ionicons.min.css' %}">
+    <!-- jvectormap -->
+    <link rel="stylesheet" href="{% static 'bower_components/jvectormap/jquery-jvectormap.css' %}">
+    <!-- Date Picker -->
+    <link rel="stylesheet"
+          href="{% static 'bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css' %}">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="{% static 'dist/css/AdminLTE.min.css' %}">
+    <!-- AdminLTE Skins. Choose a skin from the css/skins
+         folder instead of downloading all of them to reduce the load. -->
+    <link rel="stylesheet" href="{% static 'dist/css/skins/_all-skins.min.css' %}">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <![endif]-->
+    <link type="text/css" href="{% static 'mycss/jquery-ui-1.8.17.custom.css' %}" rel="stylesheet"/>
+    <link type="text/css" href="{% static 'mycss/jquery-ui-timepicker-addon.css' %}" rel="stylesheet"/>
+
+    <script src="{% static 'myjs/jquery-1.7.2.min.js' %}"></script>
+    <script src="{% static 'plugins/jQueryUI/jquery-ui.js' %}"></script>
+    <script src="{% static 'myjs/jquery-ui.min.js' %}"></script>
+    <script src="{% static 'myjs/jquery-ui-timepicker-addon.js' %}"></script>
+    <script src="{% static 'myjs/fnmat.js' %}"></script>
+    <script src="{% static 'myjs/weightmat.js' %}"></script>
+    <script src="{% static 'myjs/i18n/jquery-ui-timepicker-zh-CN.js' %}"></script>
+    <script src="{% static 'dist/js/adminlte.min.js' %}"></script>
+
+    <!-- Google Font -->
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+    <script>
+        $(function () {
+            $(".ui_timepicker").datetimepicker({
+                //showOn: "button",
+                //buttonImage: "./css/images/icon_calendar.gif",
+                //buttonImageOnly: true,
+                showSecond: true,
+                timeFormat: 'hh:mm:ss',
+                dateFormat: "yy-mm-dd",
+                stepHour: 1,
+                stepMinute: 1,
+                stepSecond: 1
+            })
+
+        })
+    </script>
+
+
+{% endblock %}
+{% block content %}
+
+    <section class="content-header">
+        <h1>
+            压力数据
+        </h1>
+        <br>
+    </section>
+    <div class="comWidth data">
+        <div class="box-solid" style="width:550px;">
+            <div id="graphic" style="width: 550px;">
+{#                <div id="chart1" class="main" style="width: 550px;height: 550px;"></div>#}
+                <div id="chart1" class="main" style="width: 550px; height:800px"></div>
+            </div><!--/span-->
+
+{#            <div class="box-header">#}
+{#                <i class="fa fa-th"></i>#}
+{#                <h3 class="box-title">足底压力展示</h3>#}
+{#            </div>#}
+        </div>
+        {% comment %}<button class="report-btn text-center ft14">查看分析报告</button>{% endcomment %}
+        <div class="report fright border">
+            <div class="report-headline weight ft22 text-center">足部分析报告</div>
+            <div class="ft20 text-center">
+                <table class="border report-table">
+                    <tr>
+                        <td class="color-cla bor-bot bor-rig">姓名</td>
+                        <td class="name-blank bor-bot bor-rig" colspan="3" id="userName">{{ request.session.username }}</td>
+                    </tr>
+                    <tr>
+                        <td class="color-cla bor-bot bor-rig">性别</td>
+                        <td class="name-blank bor-bot" colspan="3">男</td>
+                    </tr>
+                    <tr>
+                        <td class="color-cla bor-bot bor-rig">步态周期</td>
+                        <td class="name-blank bor-bot bor-rig" colspan="3" id ="gaitCycle">待传入</td>
+                    </tr>
+                    <tr>
+                        <td class="color-cla bor-bot bor-rig">摆动时相</td>
+                        <td class="name-blank bor-bot bor-rig" colspan="3" id="swingTime">待传入</td>
+                    </tr>
+                    <tr>
+                        <td class="color-cla bor-bot bor-rig">支撑时相</td>
+                        <td class="name-blank bor-bot bor-rig" colspan="3" id="braceTime">待传入</td>
+                    </tr>
+                    <tr>
+                        <td class="color-cla bor-bot bor-rig">达峰值压力</td>
+                        <td class="name-blank bor-bot bor-rig" colspan="3" id="pressurePeak">待传入</td>
+                    </tr>
+                    <tr>
+                        <td class="color-cla bor-bot bor-rig">达峰值时间</td>
+                        <td class="name-blank bor-bot bor-rig" colspan="3" id="timePeak">待传入</td>
+                    </tr>
+                    <tr>
+                        <td class="color-cla bor-bot bor-rig">步频</td>
+                        <td class="name-blank bor-bot bor-rig" colspan="3" id="cadence">待传入</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="provice ft20">
+                <br>
+                <span class="weight">结果及建议：</span><br>
+                <span>支撑时相与摆动时相所占比例合理。</span><br>
+                <span>步态正常。</span>
+            </div>
+        </div>
+    <div class="table1">
+        <table id="footDataTable">
+            <thead>
+            <tr>
+                <th>时间</th>
+                <th>左1</th>
+                <th>左2</th>
+                <th>左3</th>
+                <th>左4</th>
+                <th>左5</th>
+                <th>左6</th>
+                <th>左7</th>
+                <th>左8</th>
+                <th>左9</th>
+                <th>右1</th>
+                <th>右2</th>
+                <th>右3</th>
+                <th>右4</th>
+                <th>右5</th>
+                <th>右6</th>
+                <th>右7</th>
+                <th>右8</th>
+                <th>右9</th>
+            </tr>
+            </thead>
+        </table>
+    </div>
+
+    <div class="table2">
+        <table id="footDataTable2">
+            <thead>
+            <tr>
+                <th>时间</th>
+                <th>左1</th>
+                <th>左2</th>
+                <th>左3</th>
+                <th>左4</th>
+                <th>左5</th>
+                <th>左6</th>
+                <th>左7</th>
+                <th>左8</th>
+                <th>左9</th>
+                <th>右1</th>
+                <th>右2</th>
+                <th>右3</th>
+                <th>右4</th>
+                <th>右5</th>
+                <th>右6</th>
+                <th>右7</th>
+                <th>右8</th>
+                <th>右9</th>
+            </tr>
+            </thead>
+        </table>
+    </div>
+
+</div>
+
+{% endblock %}
+{% block endjs %}
+    <script src="{% static 'myjs/src/echarts.js' %}"></script>
+    <script>
+        $(function () {
+            //checkLeftOrRight();
+            rightCal();
+            updateMark();
+            pressureTransfer();
+        })
+
+    //压力分析算法
+    var gaitCycle;
+    var swingTime;
+    var braceTime;
+    var pressurePeak;
+    var timePeak;
+    var cadence;
+
+    var gaitCycleNumberList = new Array();
+    var gaitCycleList = new Array();
+    var swingTimeList = new Array();
+    var braceTimeList = new Array();
+    var pressurePeakList = new Array();
+    var timePeakList = new Array();
+    var cadenceList = new Array();
+
+    var RealPressureLeft;
+    var RealPressureLeftList = new Array();
+     var RealPressureRight;
+    var RealPressureRightList = new Array();
+
+
+    function checkLeftOrRight() {
+        if (fdList[2].left[0] < 5 || fdList[2].left[1] < 5) {
+            rightCal();
+        }
+        else {
+            leftCal();
+        }
+    }
+    //动态指标赋值
+    function updateMark() {
+        var index = 0;
+        setInterval(function () {
+            var data1 = gaitCycleList[index];
+            $("#gaitCycle").html(data1);
+            var data2 = swingTimeList[index];
+            $("#swingTime").html(data2);
+             var data3 = braceTimeList[index];
+            $("#braceTime").html(data3);
+            var data4 = pressureRealList[index];
+            $("#pressurePeak").html(data4);
+             var data5 = timePeakList[index];
+            $("#timePeak").html(data5);
+             var data6 = cadenceList[index];
+            $("#cadence").html(data6);
+            ++index;
+        }, 1000);
+    }
+
+    //右脚压力分析指标算法
+        //步态周期、摆动时相、支撑时相、达峰值压力、达峰值时间、步频
+        function rightCal() {
+        var startTime = 0;
+        var endTime = 0;
+        //摆动相开始、结束时间
+        var swingStartTime = 0;
+        var swingEndTime = 0;
+        //支撑相开始、结束时间
+        var braceStartTime = 0;
+        var braceEndTime = 0;
+        //一个步态周期的起止时间 Array
+        var startTimeList = new Array();
+        var endTimeList = new Array();
+        //摆动相 起止时间
+        var swingStartTimeList = new Array();
+        var swingEndTimeList = new Array();
+        // 支撑相 起止时间
+        var braceStartTimeList = new Array();
+        var braceEndTimeList = new Array();
+
+        //周期起止时间赋值
+        var flag = 0;
+        for (var i = 1; i < fdList_len; i++) {
+            if ((fdList[i].left[1] < 5 || fdList[i].left[2] < 5 ) &&(flag == 0 )){
+                startTime = fdList[i].time;
+                startTimeList.push(startTime);
+                flag = 1;
+            }
+            if((fdList[i].left[1] > 100 || fdList[i].left[2] > 100 ) && (flag == 1 )){
+                flag = 2;
+            }
+            if ((fdList[i].left[1] < 5 || fdList[i].left[2] < 5) && (flag == 2 )){
+                endTime = fdList[i].time;
+                endTimeList.push(endTime);
+                flag = 0;
+            }
+        }
+        //步态周期和步频赋值
+        for(var j = 0; j < endTimeList.length; j++){
+            // 步态周期
+            gaitCycleNumber = (endTimeList[j]-startTimeList[j])/1000;
+            gaitCycleNumberList.push(gaitCycleNumber);
+            gaitCycle = gaitCycleNumber +"s";
+            gaitCycleList.push(gaitCycle);
+            //步频
+            var preData = 60/gaitCycleNumber;
+            //cadence 步频
+            cadence = preData.toString().substring(0, preData.toString().indexOf(".")) +"/s";
+            cadenceList.push(cadence);
+
+        }
+        // 摆动时相 起止时间
+        var secondFlag = 0;
+        for(var i = 1; i < fdList_len; i++){
+            if((fdList[i].left[1] < 5 || fdList[i].left[2] < 5 ) &&(secondFlag == 0)){
+                secondFlag = 1;
+            }
+            if((fdList[i].left[1] > 100 || fdList[i].left[2] > 100 ) &&(secondFlag == 1)){
+                secondFlag = 2;
+            }
+            if((fdList[i].right[6] < 5 || fdList[i].right[7] < 5 ) &&(fdList[i].left[1] > 100 || fdList[i].left[2] > 100 )&&(secondFlag == 2)){
+                 secondFlag = 3;
+                 swingStartTime = fdList[i].time;
+                 swingStartTimeList.push(swingStartTime);
+            }
+            if ((fdList[i].left[1] < 5 || fdList[i].left[2] < 5) && (secondFlag == 3 )){
+                swingEndTime = fdList[i].time;
+                swingEndTimeList.push(swingEndTime);
+                secondFlag = 0;
+            }
+        }
+        //计算摆动时相
+        for(var j = 0;j < swingEndTimeList.length; j++){
+            swingTime = (swingEndTimeList[j] - swingStartTimeList[j])/1000 + "s";
+            swingTimeList.push(swingTime);
+        }
+        //支撑时相
+        var thirdFlag = 0;
+        for(var i = 1; i < fdList_len; i++){
+            if((fdList[i].left[1] < 5 || fdList[i].left[2] < 5 ) &&(thirdFlag == 0)){
+                braceStartTime = fdList[i].time;
+                braceStartTimeList.push(braceStartTime);
+                thirdFlag = 1;
+            }
+            if((fdList[i].left[1] > 100 || fdList[i].left[2] > 100 ) &&(thirdFlag == 1)){
+                thirdFlag = 2;
+            }
+            if((fdList[i].right[6] < 5 || fdList[i].right[7] < 5 ) &&(fdList[i].left[1] > 100 || fdList[i].left[2] > 100 )&&(thirdFlag == 2)){
+                braceEndTime = fdList[i].time;
+                braceEndTimeList.push(braceEndTime);
+                thirdFlag = 0;
+            }
+        }
+        for(var j = 0;j < braceEndTimeList.length; j++){
+            braceTime = (braceEndTimeList[j] - braceStartTimeList[j])/1000 + "s";
+            braceTimeList.push(braceTime);
+        }
+
+
+        //达峰值压力、达峰值时间
+        for(var i = 0; i < gaitCycleList.length;i++){
+            var tempDataList = fdList.slice();
+            //debugger
+            var pressureNumber = parseInt((endTimeList[i] - startTimeList[i])/80+1);
+            for(var j = 0; j < pressureNumber;j++){
+                for(var k = 0;k < 9-1;k++){
+                    var temp;
+                    if(tempDataList[j].left[k] > tempDataList[j].left[k+1]){
+                        temp = tempDataList[j].left[k];
+                        tempDataList[j].left[k] = tempDataList[j].left[k+1];
+                        tempDataList[j].left[k+1] = temp;
+                    }
+                }
+                for(var x = 0; x < 9-1; x++){
+                    var temp;
+                    if(tempDataList[j].right[x] > tempDataList[j].right[x+1]){
+                        temp = tempDataList[j].right[x];
+                        tempDataList[j].right[x] = tempDataList[j].right[x+1];
+                        tempDataList[j].right[x+1] = temp;
+                    }
+                }
+                if(tempDataList[j].left[8] > tempDataList[j].right[8]){
+                    tempDataList[j].right[8] = tempDataList[j].left[8];
+                }
+            }
+            for(var y = 0; y < pressureNumber - 1; y++){
+                var temp;
+                var tempTime;
+                if(tempDataList[y].right[8] > tempDataList[y+1].right[8]){
+                    temp = tempDataList[y].right[8];
+                    tempDataList[y].right[8] = tempDataList[y+1].right[8];
+                    tempDataList[y+1].right[8] = temp;
+                    tempTime = tempDataList[y].time;
+                    tempDataList[y].time = tempDataList[y+1].time;
+                    tempDataList[y+1].time = tempTime;
+                }
+            }
+            pressurePeakList.push(tempDataList[pressureNumber-1].right[8]);
+            timePeak = tempDataList[pressureNumber-1].time /1000 +"s";
+            timePeakList.push(timePeak);
+            tempDataList.splice(0,pressureNumber);
+        }
+        console.log(gaitCycleList);
+        console.log(startTimeList);
+        console.log(endTimeList);
+        console.log(swingTimeList);
+        console.log(swingStartTimeList);
+        console.log(swingEndTimeList);
+        console.log(braceTimeList);
+        console.log(braceStartTimeList);
+        console.log(braceEndTimeList);
+        console.log(pressurePeakList);
+        console.log(timePeakList);
+        console.log(cadenceList);
+    }
+    //压力数据解析
+        function Transfer(List){
+            //电压
+            var voltage;
+            //电阻
+            var resistance;
+            //时间
+            var time;
+            //传感器电压
+            var Real;
+            var RealList = new Array();
+            for (var i = 0;i<List.length;i++){
+                if(List[i] == 0){
+                    voltage = 0;
+                }
+                if(List[i] == 1){
+                    voltage = 1.16;
+                }
+                if((List[i] >1 )&& (List[i] <= 255) ){
+                    voltage = (0.0084*List[i] + 1.1516);
+                }
+                resistance = 5.2*(3.3/(voltage+0.0001)-1);
+                time = (2.2056 - (Math.log(resistance)/Math.log(10)))/0.7096;
+                Real = (Math.pow(10,time))/1000*9.8;
+                Real = pressureReal.toFixed(1);
+                RealList.push(Real);
+                return RealList;
+            }
+
+        }
+
+        function pressureTransfer(){
+            //电压
+            var voltage;
+            //电阻
+            var resistance;
+            //时间
+            var time;
+            //传感器电压
+            var pressureReal;
+            pressureRealList = new Array();
+            for(var i = 0;i<pressurePeakList.length;i++){
+                if(pressurePeakList[i] == 0){
+                    voltage = 0;
+                }
+                if(pressurePeakList[i] == 1){
+                    voltage = 1.16;
+                }
+                if((pressurePeakList[i] >1 )&& (pressurePeakList[i] <= 255) ){
+                    voltage = (0.0084*pressurePeakList[i] + 1.1516);
+                }
+                resistance = 5.2*(3.3/(voltage+0.0001)-1);
+                time = (2.2056 - (Math.log(resistance)/Math.log(10)))/0.7096;
+                pressureReal = (Math.pow(10,time))/1000*9.8;
+                pressureReal = pressureReal.toFixed(1) + "N";
+                pressureRealList.push(pressureReal);
+            }
+
+            for(var j = 0;j < fdList.length;j++){
+                if(fdList[j].left == 0){
+                    voltage = 0;
+                }
+                if(fdList[j].left== 1){
+                    voltage = 1.16;
+                }
+                if((fdList[j].left >1 )&& (fdList[j].left <= 255) ){
+                    voltage = (0.0084*fdList[j].left + 1.1516);
+                }
+                resistance = 5.2*(3.3/(voltage+0.0001)-1);
+                time = (2.2056 - (Math.log(resistance)/Math.log(10)))/0.7096;
+                RealPressureLeft = (Math.pow(10,time))/1000*9.8;
+                RealPressureLeft = RealPressureLeft.toFixed(1);
+                RealPressureLeftList.push(RealPressureLeft);
+
+            }
+
+            for(var k = 0;k < fdList.length;k++){
+                if(fdList[k].right == 0){
+                    voltage = 0;
+                }
+                if(fdList[k].right== 1){
+                    voltage = 1.16;
+                }
+                if((fdList[k].right >1 )&& (fdList[k].right <= 255) ){
+                    voltage = (0.0084*fdList[k].right + 1.1516);
+                }
+                resistance = 5.2*(3.3/(voltage+0.0001)-1);
+                time = (2.2056 - (Math.log(resistance)/Math.log(10)))/0.7096;
+                RealPressureRight = (Math.pow(10,time))/1000*9.8;
+                RealPressureRight = RealPressureRight.toFixed(1);
+                RealPressureRightList.push(RealPressureRight);
+            }
+
+        }
+    /////////////////////////////////////////////////////ldy
+        // js定义类
+        function fileData() {
+            var fd = new Object;
+            fd.time = 0;
+            fd.left = new Array();
+            fd.right = new Array();
+            return fd;
+        }
+        // 输入值的集合
+        var fdList = new Array();
+
+        //从Django传入数据
+        var fdList_len = {{ listFd|length}};
+        //循环赋值
+        {% for item in listFd %}
+            var fd_temp = fileData();
+            fd_temp.time = {{ item.time }};
+            fd_temp.left.push({{ item.left1 }});
+            fd_temp.left.push({{ item.left2 }});
+            fd_temp.left.push({{ item.left3 }});
+            fd_temp.left.push({{ item.left4 }});
+            fd_temp.left.push({{ item.left5 }});
+            fd_temp.left.push({{ item.left6 }});
+            fd_temp.left.push({{ item.left7 }});
+            fd_temp.left.push({{ item.left8 }});
+            fd_temp.left.push({{ item.left9 }});
+            fd_temp.right.push({{ item.right1 }});
+            fd_temp.right.push({{ item.right2 }});
+            fd_temp.right.push({{ item.right3 }});
+            fd_temp.right.push({{ item.right4 }});
+            fd_temp.right.push({{ item.right5 }});
+            fd_temp.right.push({{ item.right6 }});
+            fd_temp.right.push({{ item.right7 }});
+            fd_temp.right.push({{ item.right8 }});
+            fd_temp.right.push({{ item.right9 }});
+            fdList.push(fd_temp);
+        {% endfor %}
+
+        // 基于准备好的dom，初始化echarts图表
+        var myChart;
+        require.config({
+            packages: [
+                {
+                    name: 'echarts',
+                    location: '/static/myjs/src',
+                    main: 'echarts'
+                },
+                {
+                    name: 'zrender',
+                    // location: 'http://ecomfe.github.io/zrender/src',
+                    location: '/static/myjs/zrender/src',
+                    main: 'zrender'
+                }
+            ]
+        });
+        require(
+            [
+                'echarts',
+                // 'echarts/chart/bar',
+                'echarts/chart/line',
+                // 'echarts/chart/map',
+                'echarts/chart/heatmap'
+            ],
+            function initEC(ec) {
+                var xData = [];
+                var yData = [];
+                for (var i = 0; i <= 200; i++) {
+                    xData.push(i);
+                }
+                for (var j = 0; j <= 250; j++) {
+                    yData.push(j);
+                }
+                myChart = ec.init(document.getElementById('chart1'), {});
+                var heatData = [255, 255, 255, 255, 255, 255, 255, 255, 255];
+
+                var option = {
+                    title: {
+                        text: '热力图自定义样式'
+                    },
+                    series: [
+                        {
+                            valueScale : 1.0/100.0,
+                            type: 'heatmap',
+                            data: heatData,
+                            blurSize: 10,
+                            minAlpha: 0.0,
+                            gradientColors: ['#483D8B', '#4A708B', '#607B8B', '#6C7B8B', '#7171C6', '#00f', 'cyan', 'lime', 'yellow', '#EE9A49', '#EE4000', '#f00'],
+                            opacity: 1,
+                            hoverable: false
+                        }
+                    ]
+                };
+
+                // 为echarts对象加载数据
+                myChart.setOption(option);
+            }
+        );
+
+        //高斯叠加的函数
+        function GaussFilter(r, s, x0, x1, y0, y1, p, f) {
+            var d = Math.exp(-(Math.pow((r - x0 * 10) / 10, 2) / (x1) + Math.pow((s - y0 * 10) / 10, 2) / (y1))) * p * f / 5.0;
+            return d;
+        }
+
+        //高斯叠加的函数
+        function add(r, s, points) {
+            var a = (GaussFilter(r, s, 3.6, 2, 2.9, 3, points[0], 0.3)) +
+                (GaussFilter(r, s, 3.8, 3, 6, 3.5, points[0], 0.2)) +
+                (GaussFilter(r, s, 4.5, 4, 3.9, 6, points[0], 0.5)) +
+                (GaussFilter(r, s, 6.4, 2, 2.9, 3, points[1], 0.3)) +
+                (GaussFilter(r, s, 6.3, 2, 6, 3.5, points[1], 0.5)) +
+                (GaussFilter(r, s, 5.2, 4, 3.9, 6, points[1], 0.4)) +
+                (GaussFilter(r, s, 7.0, 2, 10.5, 2, points[2], 0.3)) +
+                (GaussFilter(r, s, 7.2, 1.4, 10.3, 5, points[2], 0.35)) +
+                (GaussFilter(r, s, 6.6, 2.25, 8.2, 5, points[2], 0.7)) +
+                (GaussFilter(r, s, 3.4, 2, 14.9, 5, points[3], 0.6)) +
+                (GaussFilter(r, s, 5.1, 2, 13.5, 4, points[3], 0.6)) +
+                (GaussFilter(r, s, 3.7, 2.5, 7.5, 5, points[3], 0.6)) +
+                (GaussFilter(r, s, 5.1, 2, 8.9, 4, points[3], 0.6)) +
+                (GaussFilter(r, s, 4.3, 3.5, 11.3, 4, points[3], 0.6)) +
+                (GaussFilter(r, s, 7.5, 1, 13.5, 3, points[4], 0.4)) +
+                (GaussFilter(r, s, 6.6, 4, 13.7, 4, points[4], 0.4)) +
+                (GaussFilter(r, s, 6.7, 3.8, 12.2, 3, points[4], 0.35)) +
+                (GaussFilter(r, s, 8.0, 2.2, 16.6, 2, points[5], 0.3)) +
+                (GaussFilter(r, s, 8.1, 2, 16.4, 4, points[5], 0.2)) +
+                (GaussFilter(r, s, 6.5, 3.5, 15.4, 2, points[5], 0.3)) +
+                (GaussFilter(r, s, 6.9, 4, 16.6, 4, points[5], 0.2)) +
+                (GaussFilter(r, s, 3, 3, 18.2, 4.5, points[6], 0.55)) +
+                (GaussFilter(r, s, 4.5, 4, 16.2, 2.5, points[6], 0.25)) +
+                (GaussFilter(r, s, 4.9, 2.5, 18, 2.5, points[6], 0.2)) +
+                (GaussFilter(r, s, 3.9, 5, 18, 5, points[6], 0.3)) +
+                (GaussFilter(r, s, 5.8, 5, 16.6, 5, points[6], 0.25)) +
+                (GaussFilter(r, s, 6.6, 3, 20.0, 2, points[7], 0.6)) +
+                (GaussFilter(r, s, 4.2, 4, 20.3, 2.5, points[7], 0.5))+
+                (GaussFilter(r, s, 8.0, 2, 18.6, 2.5, points[7], 0.5))+
+                (GaussFilter(r, s, 6, 4, 18.2, 3, points[7], 0.35))+
+                (GaussFilter(r, s, 3, 1.5, 23.9, 3, points[8], 0.6))+
+                (GaussFilter(r, s, 2.5, 1.7, 22.6, 2.5, points[8], 0.6))+
+                (GaussFilter(r, s, 4.9, 1.2, 23.3, 1.7, points[8], 0.6))+
+                (GaussFilter(r, s, 4.9, 0.5, 23.3, 0.9, points[8], 0.09))+
+                (GaussFilter(r, s, 6.3, 1, 22.9, 1.5, points[8], 0.5))+
+                (GaussFilter(r, s, 6.3, 0.6, 22.9, 0.8, points[7], 0.1))+
+                (GaussFilter(r, s, 7.6, 1, 22.3, 1.4, points[8], 0.4))+
+                (GaussFilter(r, s, 7.4, 0.5, 22.3, 0.9, points[7], 0.1))+
+                (GaussFilter(r, s, 8.4, 1, 21.5, 1.3, points[8], 0.3))+
+                (GaussFilter(r, s, 8.4, 0.5, 21.5, 0.6, points[7], 0.1));
+            return a;
+        }
+
+        function cal1() {
+            var data = [];
+            for (var r = 0; r < 100; r += 5) {
+                for (var s = 0; s < 250; s += 5) {
+                    var left = 0;
+                    var right = 0;
+                    for (var p = 0; p < 9; p++) {
+                        left += weightmat[p][r][s] * pointDatas[0][0][y][p] / 255.0;
+                        right += weightmat[p][r][s] * pointDatas[1][0][y][p] / 255.0;
+                    }
+                    data.push([(100 - r) * 2, (250 - s) * 2, left]);
+                    data.push([(150 + r) * 2, (250 - s) * 2, right]);
+                }
+            }
+            return data;
+        }
+
+        function cal(leftPointArray, rightPointArray){
+            var data=[];
+            for(var r=0;r<100;r+=5){
+                for(var s=0;s<250;s+=5){
+                    var left = 0;
+                    var right = 0;
+                    for(var p=0;p<9;p++){
+                        left+=weightmat[p][r][s]*fnmat[leftPointArray[p]];
+                        right+=weightmat[p][r][s]*fnmat[rightPointArray[p]];
+                    }
+                    data.push([(100-r)*2,(250-s)*2,left]);
+                    data.push([(150+r)*2,(250-s)*2,right]);
+                }
+            }
+            return data;
+		}
+
+        function cal_ldy(leftPointArray, rightPointArray) {
+            var data = [];
+            // r,s 横纵坐标
+            for (var r = 0; r < 100; r += 5) {
+                for (var s = 0; s <= 250; s += 5) {
+                    //console.log(typeof (leftPointArray));
+                    var w = add((110 - r), s, leftPointArray) / 255.0;
+                    //console.log(leftPointArray)
+                    data.push([r * 2, (270 - s) * 2, w]);
+                    var e = add(r, s, rightPointArray) / 255.0;
+                    data.push([(150 + r) * 2, (270 - s) * 2, e]);
+                }
+            }
+            return data;
+        }
+
+
+        var i_flag = 0;
+        function showPerSecond() {
+            if (i_flag >= fdList_len)
+                {% comment %}i_flag = 0;{% endcomment %}
+                clearInterval(interval);
+            {#        console.log(i_flag)#}
+            //取出该次循环的值
+            var thisData = fdList[i_flag];
+            var heatData = cal(thisData.left, thisData.right);
+            var option = myChart.getOption();
+            //console.log(option);
+            option.series[0].data = heatData;
+            option.title.text = "时间：" + thisData.time;
+            myChart.setOption(option, false);
+            i_flag++;
+        }
+        {% comment %}setInterval("showPerSecond()", "80");{% endcomment %}
+        var interval = setInterval("showPerSecond()", "80");
+
+
+        function checkDataFileIsNotNull() {
+            setInterval("showPerSecond()", "80");
+
+        }
+{#        var judge = "{{ listFd }}";#}
+{#        if (judge != "None" && judge != "")#}
+{#            setInteraval("showPerSecond()", "80");#}
+// 表格动态添加数据
+    var DT = "";
+    for (i = 0; i < fdList_len; i++) {
+        DT += "<tr>" + "<td>" + fdList[i].time + "</td>" +
+            "<td>" + fdList[i].left[0] + "</td>" + "<td>" + fdList[i].left[1] + "</td>" + "<td>"
+            + fdList[i].left[2] + "</td>" + "<td>" + fdList[i].left[3] + "</td>" + "<td>"
+            + fdList[i].left[4] + "</td>" + "<td>" + fdList[i].left[5] + "</td>" + "<td>"
+            + fdList[i].left[6] + "</td>" + "<td>" + fdList[i].left[7] + "</td>" + "<td>"
+            + fdList[i].left[8] + "</td>" + "<td>"
+            + fdList[i].right[0] + "</td>" + "<td>" + fdList[i].right[1] + "</td>" + "<td>"
+            + fdList[i].right[2] + "</td>" + "<td>" + fdList[i].right[3] + "</td>" + "<td>"
+            + fdList[i].right[4] + "</td>" + "<td>" + fdList[i].right[5] + "</td>" + "<td>"
+            + fdList[i].right[6] + "</td>" + "<td>" + fdList[i].right[7] + "</td>" + "<td>"
+            + fdList[i].right[8] + "</td>" + "</tr>"
+        alert(fdList[i].left);
+    }
+    $("#footDataTable").append(DT);
+
+//真实压力数据填充
+    for(var i = 0;i < fdList.length;i++){
+        leftDataList.push(fdList[i].left);
+        rightDataList.push(fdList[i].right);
+    }
+    RealPressureLeftList = Transfer(leftDataList);
+        
+    var DT2 = "";
+    for (i = 0; i < fdList_len; i++) {
+        DT2 += "<tr>" + "<td>" + fdList[i].time + "</td>" +
+            "<td>" + RealPressureLeftList[i][0] + "</td>" + "<td>" + RealPressureLeftList[i][1] + "</td>" + "<td>"
+            + RealPressureLeftList[i][2] + "</td>" + "<td>" + RealPressureLeftList[i][3] + "</td>" + "<td>"
+            + RealPressureLeftList[i][4] + "</td>" + "<td>" + RealPressureLeftList[i][5] + "</td>" + "<td>"
+            + RealPressureLeftList[i][6] + "</td>" + "<td>" + RealPressureLeftList[i][7] + "</td>" + "<td>"
+            + RealPressureLeftList[i][8] + "</td>" + "<td>"
+            + RealPressureRightList[i][0] + "</td>" + "<td>" + RealPressureRightList[i][1] + "</td>" + "<td>"
+            + RealPressureRightList[i][2] + "</td>" + "<td>" + RealPressureRightList[i][3] + "</td>" + "<td>"
+            + RealPressureRightList[i][4] + "</td>" + "<td>" + RealPressureRightList[i][5] + "</td>" + "<td>"
+            + RealPressureRightList[i][6] + "</td>" + "<td>" + RealPressureRightList[i][7] + "</td>" + "<td>"
+            + RealPressureRightList[i][8] + "</td>" + "</tr>"
+    }
+    $("#footDataTable2").append(DT2);
+
+    </script>
+
+{% endblock %}

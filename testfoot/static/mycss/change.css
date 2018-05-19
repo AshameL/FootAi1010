@@ -1,0 +1,102 @@
+.container {
+    width: 976px;
+    padding-right: 10px;
+    padding-left: 10px;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top:20px;
+    background-color: #87CEFA;
+    border: 1px solid #C9C9C9;
+    border-radius: 10px;
+    }
+.jumbotron h1{
+    font-size: 40px;
+    font-family: cursive;
+    font-weight:normal;
+    text-align: center;
+}
+.jumbotron p {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-size: 16px;
+    font-weight: 200;
+    text-indent:35px;
+}
+.jumbotron {
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+.some{
+    width:1000px;
+    height:200px;
+    margin-top:20px;
+    background-image: url(../images/foot1.jpg),url(../images/team.jpg),url(../images/contact.jpg);
+    background-position:0%,42%,82%;
+    background-repeat:no-repeat;
+}
+.col-sm-4{
+    margin-top:20px;
+}
+.nav a:hover{
+    font-size:20px;
+    color:#1874CD;
+    text-decoration: underline;
+
+}
+
+.one h3{
+    text-align: center;
+}
+.one.p{
+    text-align: center;
+
+}
+.one{
+    width:220px;
+    height:200px;
+    margin-left:0;
+    margin-top:50px;
+}
+ .two{
+    width:220px;
+    height:200px;
+    margin-left:350px;
+    margin-top:-200px;
+
+
+}
+.three{
+    width:220px;
+    height:200px;
+    margin-left:660px;
+    margin-top:-200px;
+
+}
+
+.datepicker{
+    display: inline-block;
+    
+}
+.sidebar-mini  .main-header .navbar{
+    background-color:#3c8dbc;
+}
+.sidebar-mini  .main-header .logo{
+    background-color: #367fa9;
+    color: #fff;
+    border-bottom: 0 solid transparent;
+}
+.wrapper .loginBox .login_cont li{
+    list-style:none;
+}
+.fileList tr{
+    height:20px;
+}
+.fileList .echartsPlay{
+    margin:0 0 0 250px;
+    width:33px;
+    background-color:#ecf0f5;
+}
+.fileList .echartsPlay:hover{
+    color:#F4A460;
+    border:1px solid #DBDBDB;
+}

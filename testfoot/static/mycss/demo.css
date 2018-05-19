@@ -1,0 +1,289 @@
+body, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form,
+fieldset, legend, input, button, textarea, p, blockquote, th, td {
+    margin: 0;
+    padding: 0;
+    outline: none;
+}
+
+input[type='text']::-ms-clear {
+    display: none;
+}
+
+input, img, button, select {
+    border: none;
+    outline: none;
+}
+
+select[disabled] {
+    background: #eee;
+}
+
+input[disabled] {
+    background: #eee;
+}
+
+body {
+    height: 100%;
+}
+
+.outside {
+    width: 100%;
+    height: 100%;
+    background-color: #ccc;
+
+    z-index: 1000;
+    position: absolute;
+}
+
+.dialog {
+    width: 1028px;
+    height: 600px;
+    margin: 0 160px;
+    position: absolute;
+    display: block;
+    background-color: #fff;
+    z-index: 1500;
+    overflow: auto;
+}
+
+.ft16 {
+    font-size: 16px;
+    color: #fff;
+}
+
+.ft12 {
+    font-size: 12px;
+}
+
+.ft13 {
+    font-size: 13px;
+}
+
+.ft14 {
+    font-size: 14px;
+}
+
+.dialog .nav .text {
+    width: 1008px;
+    height: 35px;
+    background-color: #278bdd;
+    vertical-align: middle;
+    padding-left: 18px;
+    position: fixed;
+    top: 0px;
+}
+
+/* .nav .text span .sp{
+	width:26px;
+	height:30px;
+	z-index: 1;
+} */
+/* .nav .text span .sp>img{
+	width:100%;
+} */
+#edit-icon {
+    display: inline-block;
+    width: 36px;
+    height: 35px;
+    vertical-align: middle;
+}
+
+#edit-icon:hover {
+    background-color: #0b79af;
+
+}
+
+.dialog .text .close-icon {
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    color: #fff;
+    text-decoration: none;
+    margin-left: 840px;
+}
+
+.dialog .text .close-icon:hover {
+    color: red;
+}
+
+ul, li {
+    list-style: none;
+}
+
+li.one-third {
+    display: inline-block;
+    width: 33%;
+}
+
+li.t2 {
+    display: inline-block;
+    width: 33%;
+}
+
+.rows {
+    margin-top: 8px;
+
+}
+
+.first-row {
+    margin-top: 40px;
+}
+
+li input {
+    width: 150px;
+    height: 20px;
+    border: 1px solid #ccc;
+}
+
+label {
+    display: inline-block;
+    width: 150px;
+    margin-right: 18px;
+    text-align: right;
+}
+
+select {
+    width: 154px;
+    height: 24px;
+    border: 1px solid #ccc;
+}
+
+li.row {
+    width: 100%;
+    display: inline-block;
+}
+
+li input.long-input {
+    width: 81.5%;
+    display: inline-block;
+}
+
+.bottom-button {
+    width: 100%;
+    margin-top: 20px;
+}
+
+.bottom-button button {
+    display: inline-block;
+    width: 100px;
+    height: 30px;
+    line-height: 30px;
+    margin-left: 469px;
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+.hr {
+    width: 100%;
+    height；4px;
+    margin-top: 21px;
+}
+
+.bottom {
+    margin-top: 5px;
+    text-align: center;
+}
+
+.turn {
+    background: url("") no-repeat;
+}
+
+.turn1 {
+    background-image: url("");
+}
+
+.box {
+    width: 180px;
+    height: 96px;
+    border: 2px solid #bbb;
+    background: url("") no-repeat;
+    display: inline-block;
+}
+
+.pic {
+    width: 30px;
+    height: 30px;
+}
+
+.pic > img {
+    width: 100%;
+    z-index: 1;
+}
+
+.pic > span {
+    position: relative;
+    left: -10px;
+    top: -35px;
+    z-index: 10;
+    text-align: center;
+    vertical-align: middle;
+    color: #f3f3f3;
+}
+
+.box1 {
+    margin-left: 12px;
+}
+
+.blue {
+    color: #337ab7;
+}
+
+.black {
+    color: black;
+}
+
+.orange {
+    color: orange;
+}
+
+.box-text li {
+    width: 100%;
+    height: auto;
+}
+
+/* .box-text li span{
+   
+} */
+.box-text li span.blue {
+    margin-left: -15px;
+    width: 60px;
+    text-align: right;
+
+}
+
+.box-text li span.black {
+    margin-right: -20px;
+    width: 113px;
+    overflow: hidden;
+
+}
+
+.box-text li span.orange {
+    text-align: left;
+
+}
+
+.bottom {
+    margin-bottom: 30px;
+}
+
+.blue-button {
+    background-color: #278bdd;
+    color: #fff;
+}
+
+.nav .text .back {
+    text-decoration: none;
+    color: #fff;
+}
+
+.edit_icon .clicked {
+    background-color: rgb(11, 121, 175);
+}
+
+.calender {
+    background: url(../../js/lib-ext/my97/skin/datePicker.gif) right no-repeat;
+    border:
+}

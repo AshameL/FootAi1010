@@ -1,0 +1,219 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block title %}健康档案{% endblock %}
+{% block headjs %}
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <!-- Bootstrap 3.3.7 -->
+    <link rel="stylesheet" href="{% static 'mycss/change.css' %}">
+    <link rel="stylesheet" href="{% static 'mycss/main.css' %}">
+    <link rel="stylesheet" href="{% static 'bower_components/bootstrap/dist/css/bootstrap.min.css' %}">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="{% static 'bower_components/font-awesome/css/font-awesome.min.css' %}">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="{% static 'bower_components/Ionicons/css/ionicons.min.css' %}">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="{% static 'dist/css/AdminLTE.min.css' %}">
+    <!-- AdminLTE Skins. Choose a skin from the css/skins
+    folder instead of downloading all of them to reduce the load. -->
+    <link rel="stylesheet" href="{% static 'dist/css/skins/_all-skins.min.css' %}">
+    <!-- Morris chart -->
+    <link rel="stylesheet" href="{% static 'bower_components/morris.js/morris.css' %}">
+    <!-- jvectormap -->
+    <link rel="stylesheet" href="{% static 'bower_components/jvectormap/jquery-jvectormap.css' %}">
+    <!-- Date Picker -->
+    <link rel="stylesheet"
+          href="{% static 'bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css' %}">
+    <!-- Daterange picker -->
+    <link rel="stylesheet" href="{% static 'bower_components/bootstrap-daterangepicker/daterangepicker.css' %}">
+    <!-- bootstrap wysihtml5 - text editor -->
+    <link rel="stylesheet" href="{% static 'plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css' %}">
+    <script type="text/javascript" src="{% static 'myjs/jquery-1.7.2.js' %}"></script>
+    {#    <script type="text/javascript" src="{% static 'myjs/bmob-min.js' %}"></script>#}
+    {#    <script type="text/javascript" src="{% static 'myjs/new.js' %}"></script>#}
+    {#    <script src="{% static 'myjs/edit.js' %}"></script>#}
+{% endblock %}
+{% block content %}
+    <section class="content-header">
+        <h1>
+            健康档案
+            <small>用户个人信息</small>
+        </h1>
+    </section>
+    <div class="basicMessage">
+        <form method="post">
+            {% csrf_token %}
+            <div class="txt1">
+                <span>编号</span><input class="fox" type="text" id="number" readonly="true" name="objectId"
+                                      value="{{ personHealthDoc.objectId }}">
+                <span>姓名</span><input class="fox" type="text" id="name" disabled="" name="name"
+                                      value="{{ personHealthDoc.name }}">
+                <span>性别</span><select class="fox" id="sex" disabled="" name="sex" vlaue="{{ personHealthDoc.sex }}">
+                <option value="男">男</option>
+                <option value="女">女</option>
+            </select>
+                <span>年龄</span><select class="fox" id="age" disabled="" name="age">
+                <option value="25">25</option>
+                <option value="26">26</option>
+                <option value="27">27</option>
+                <option value="28">28</option>
+                <option value="29">29</option>
+                <option value="30">30</option>
+                <option value="31">31</option>
+                <option value="32">32</option>
+                <option value="33">33</option>
+                <option value="34">34</option>
+                <option value="35">35</option>
+                <option value="36">36</option>
+                <option value="37">37</option>
+                <option value="38">38</option>
+                <option value="39">39</option>
+                <option value="40">40</option>
+                <option value="41">41</option>
+                <option value="42">42</option>
+                <option value="43">43</option>
+                <option value="44">44</option>
+                <option value="45">45</option>
+                <option value="46">46</option>
+                <option value="47">47</option>
+                <option value="48">48</option>
+                <option value="49">49</option>
+                <option value="50">50</option>
+                <option value="51">51</option>
+                <option value="52">52</option>
+                <option value="53">53</option>
+                <option value="54">54</option>
+                <option value="55">55</option>
+                <option value="56">56</option>
+                <option value="57">57</option>
+                <option value="58">58</option>
+                <option value="59">59</option>
+            </select>
+            </div>
+            <div class="txt3">
+
+                <span>身高</span><input type="text" name="height" class="fox" value="{{ personHealthDoc.height }}"
+                                      disabled="">
+                {#                <select class="fox" id="height" disabled="" name="height">#}
+                {#                <option value="">150~159cm</option>#}
+                {#                <option value="">160~169cm</option>#}
+                {#                <option value="">170~179cm</option>#}
+                {#                <option value="">180~189cm</option>#}
+                {#                <option value="">190~199cm</option>#}
+                {#            </select>#}
+                <span>体重</span>
+                <input type="text" name="weight" class="fox" value="{{ personHealthDoc.weight }}" disabled="">
+                {#                <select class="fox" id="weight" disabled="" name="weight">#}
+                {#                <option value="">50~59kg</option>#}
+                {#                <option value="">60~69kg</option>#}
+                {#                <option value="">70~79kg</option>#}
+                {#                <option value="">80~89kg</option>#}
+                {#                <option value="">90~99kg</option>#}
+                {#            </select>#}
+                <span>脚码</span><select class="fox" id="size" disabled="" name="foot_size">
+                <option value="34">34</option>
+                <option value="35">35</option>
+                <option value="36">36</option>
+                <option value="37">37</option>
+                <option value="38">38</option>
+                <option value="39">39</option>
+                <option value="40">40</option>
+                <option value="41">41</option>
+                <option value="42">42</option>
+                <option value="43">43</option>
+                <option value="44">44</option>
+                <option value="45">45</option>
+                <option value="46">46</option>
+                <option value="47">47</option>
+                <option value="48">48</option>
+                <option value="49">49</option>
+                <option value="50">50</option>
+            </select>
+                <span>学历</span><select class="fox"  id="education" disabled>
+                <option value="">小学</option>
+                <option value="">中学</option>
+                <option value="">普通专科</option>
+                <option value="">学士</option>
+                <option value="">硕士</option>
+                <option value="">博士</option>
+                <option value="">博士后</option>
+            </select>
+            </div>
+            <div class="txt4">
+                <span>固定电话</span><input class="longBox" type="text" id="fixed"disabled>
+                <span>移动电话</span><input class="longBox" type="text" id="mobile"disabled >
+            </div>
+            <div class="txt4">
+                <span>通讯地址</span><input class="longBox" type="text"  id="address"disabled>
+                <span>电子邮箱</span><input class="longBox" type="text"  id="email"disabled>
+             </div>
+            <div class="collTime">
+                <span>上一次采集时间</span><input class="longBox" type="text" id="last" readonly="true">
+                <span>操作者</span><input class="fox" type="text" id="operator" disabled>
+            </div>
+            <div class="bottom">
+                <button class="edit">编辑</button>
+                <button class="submit" style="display:none;">提交</button>
+                <!--<button class="reset">重置</button>-->
+            </div>
+            {#            <div>{{ personHealthDoc }}</div>#}
+        </form>
+    </div>
+{% endblock %}
+{% block endjs %}
+
+    <!-- jQuery 3 -->
+    <script src="{% static 'bower_components/jquery/dist/jquery.min.js' %}"></script>
+    <!-- jQuery UI 1.11.4 -->
+    <script src="{% static 'bower_components/jquery-ui/jquery-ui.min.js' %}"></script>
+    <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+    <script>
+        $.widget.bridge('uibutton', $.ui.button);
+    </script>
+    <!-- Bootstrap 3.3.7 -->
+    <script src="{% static 'bower_components/bootstrap/dist/js/bootstrap.min.js' %}"></script>
+    <!-- Morris.js charts -->
+    <script src="{% static 'bower_components/raphael/raphael.min.js' %}"></script>
+    <script src="{% static 'bower_components/morris.js/morris.min.js' %}"></script>
+    <!-- Sparkline -->
+    <script src="{% static  'bower_components/jquery-sparkline/dist/jquery.sparkline.min.js' %}"></script>
+    <!-- jvectormap -->
+    <script src="{% static 'plugins/jvectormap/jquery-jvectormap-1.2.2.min.js' %}"></script>
+    <script src="{% static 'plugins/jvectormap/jquery-jvectormap-world-mill-en.js' %}"></script>
+    <!-- jQuery Knob Chart -->
+    <script src="{% static 'bower_components/jquery-knob/dist/jquery.knob.min.js' %}"></script>
+    <!-- daterangepicker -->
+    <script src="{% static 'bower_components/moment/min/moment.min.js' %}"></script>
+    <script src="{% static  'bower_components/bootstrap-daterangepicker/daterangepicker.js' %}"></script>
+    <!-- datepicker -->
+    <script src="{% static 'bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js' %}"></script>
+    <!-- Bootstrap WYSIHTML5 -->
+    <script src="{% static 'plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js' %}"></script>
+    <!-- Slimscroll -->
+    <script src="{% static 'bower_components/jquery-slimscroll/jquery.slimscroll.min.js' %}"></script>
+    <!-- FastClick -->
+    <script src="{% static 'bower_components/fastclick/lib/fastclick.js' %}"></script>
+    <!-- AdminLTE App -->
+    <script src="{% static 'dist/js/adminlte.min.js' %}"></script>
+    <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+    <script src="{% static 'dist/js/pages/dashboard.js' %}"></script>
+    <!-- AdminLTE for demo purposes -->
+    <script src="{% static 'dist/js/demo.js' %}"></script>
+    <script>
+        window.onload = function () {
+            //var doc_sex ="{{ personHealthDoc.sex }}";
+            //var doc_footsize ="{{ personHealthDoc.foot_size }}";
+            $("#age option[value= '{{ personHealthDoc.age }}']").attr("selected", "selected");
+            $("#sex option[value= '{{ personHealthDoc.sex }}']").attr("selected", "selected");
+            $("#size option[value= '{{ personHealthDoc.foot_size }}']").attr("selected", "selected");
+        }
+        $('.edit').click(function () {
+            $('input[type="text"]').removeAttr('disabled');
+            $('select').removeAttr('disabled');
+            $(this).hide();
+            $(".submit").show();
+            return false;
+        });
+
+    </script>
+{% endblock %}

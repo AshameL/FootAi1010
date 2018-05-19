@@ -1,0 +1,122 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}压力测试{% endblock %}
+{% block headjs %}
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <!-- Bootstrap 3.3.7 -->
+    <link rel="stylesheet" href="{% static 'mycss/demo.css' %}">
+    <link rel="stylesheet" href="{% static 'mycss/change.css' %}">
+    <link rel="stylesheet" href="{% static 'mycss/main.css' %}">
+    <link rel="stylesheet" href="{% static 'mycss/public-date.css' %}">
+    <link rel="stylesheet" href="{% static 'bower_components/bootstrap/dist/css/bootstrap.min.css' %}">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="{% static 'bower_components/font-awesome/css/font-awesome.min.css' %}">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="{% static 'bower_components/Ionicons/css/ionicons.min.css' %}">
+    <!-- jvectormap -->
+    <link rel="stylesheet" href="{% static 'bower_components/jvectormap/jquery-jvectormap.css' %}">
+    <!-- Date Picker -->
+    <link rel="stylesheet"
+          href="{% static 'bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css' %}">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="{% static 'dist/css/AdminLTE.min.css' %}">
+    <!-- AdminLTE Skins. Choose a skin from the css/skins
+         folder instead of downloading all of them to reduce the load. -->
+    <link rel="stylesheet" href="{% static 'dist/css/skins/_all-skins.min.css' %}">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <![endif]-->
+    <link type="text/css" href="{% static 'mycss/jquery-ui-1.8.17.custom.css' %}" rel="stylesheet"/>
+    <link type="text/css" href="{% static 'mycss/jquery-ui-timepicker-addon.css' %}" rel="stylesheet"/>
+
+    <script src="{% static 'myjs/jquery-1.7.2.min.js' %}"></script>
+    <script src="{% static 'plugins/jQueryUI/jquery-ui.js' %}"></script>
+    <script src="{% static 'myjs/jquery-ui.min.js' %}"></script>
+    <script src="{% static 'myjs/jquery-ui-timepicker-addon.js' %}"></script>
+    <script src="{% static 'myjs/i18n/jquery-ui-timepicker-zh-CN.js' %}"></script>
+    <script src="{% static 'dist/js/adminlte.min.js' %}"></script>
+
+    <!-- Google Font -->
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+    <script>
+        $(function () {
+            $(".ui_timepicker").datetimepicker({
+                //showOn: "button",
+                //buttonImage: "./css/images/icon_calendar.gif",
+                //buttonImageOnly: true,
+                showSecond: true,
+                timeFormat: 'hh:mm:ss',
+                dateFormat: "yy-mm-dd",
+                stepHour: 1,
+                stepMinute: 1,
+                stepSecond: 1
+            })
+
+        })
+    </script>
+{% endblock %}
+{% block content %}
+    <section class="content-header">
+        <h1>
+            压力数据
+        </h1>
+        <br>
+    </section>
+    <div class="comWidth data">
+        <div class="box-solid" style="width:550px;">
+            <div id="graphic" style="width: 550px;">
+                {#                <div id="chart1" class="main" style="width: 550px;height: 550px;"></div>#}
+                <div id="chart1" class="main" style="width: 550px"></div>
+            </div><!--/span-->
+
+            <div class="box-header">
+                <i class="fa fa-th"></i>
+                <h3 class="box-title">足底压力测试日志</h3>
+            </div>
+            <form method="post">
+                {% csrf_token %}
+                <input id="dateStart" class="ui_timepicker" type="text" name="datetimeStart" placeholder="请选择开始时间"
+                       value=""/>
+                --
+                <input id="dateEnd" class="ui_timepicker" type="text" name="datetimeEnd" value=""
+                       placeholder="请选择结束时间"/>
+                {#                <select class="fox" name="mode">#}
+                {#                    <option value="站立">站立</option>#}
+                {#                    <option value="走路">走路</option>#}
+                {#                    <option value="跑步">跑步</option>#}
+                {#                    <option value="上楼">上楼</option>#}
+                {#                    <option value="下楼">下楼</option>#}
+                {#                </select>#}
+                {#            <button id="searchmodel" onclick="search()">查询</button>#}
+                <input type="submit" value="查询">
+                <p></p>
+            </form>
+            <table border="1" report fright border>
+                <thead>
+                {#                <td>objectId</td>#}
+                {#                <td>userId</td>#}
+                <td>数据集合名称</td>
+                <td>记录时间</td>
+                </thead>
+                {% for i in listFd %}
+                    <tr>
+                        {#                        <td><a href="{% url 'show' i.objectId %}" target="view_window">{{ i.objectId }}</a></td>#}
+                        {#                        <td>{{ i.userId }}</td>#}
+                        <td><a href="{% url 'show2' i.objectId %}" target="view_window">{{ i.fileName }}</a></td>
+                        <td>{{ i.createdAt }}</td>
+
+                    </tr>
+                {% endfor %}
+            </table>
+
+        </div>
+
+    </div>
+
+{% endblock %}
+
+{% block endjs %}
+
+{% endblock %}
